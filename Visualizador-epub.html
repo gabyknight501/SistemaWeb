@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar y Mostrar HTML, HTMLZ y PDF</title>
+    <style>
+        #viewer {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;  /* Tamaño de fuente predeterminado */
+            overflow-y: auto;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            font-size: 16px;
+        }
+        /* Asegurar que las tablas tengan bordes visibles */
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cargar y Mostrar Archivo HTML, HTMLZ o PDF</h1>
+
+    <!-- Selector de archivo HTML, HTMLZ o PDF -->
+    <input type="file" id="fileInput" accept=".html,.htmlz,.pdf" />
+
+    <!-- Contenedor para mostrar el contenido del archivo -->
+    <div id="viewer"></div>
+
+    <!-- Controles de zoom -->
+    <button id="zoomInButton">Acercar</button>
+    <button id="zoomOutButton">Alejar</button>
+
+    <!-- Botones de navegación (para HTMLZ y PDF) -->
+    <button id="prevButton">← Anterior</button>
+    <button id="nextButton">Siguiente →</button>
+
+    <!-- Botones para ir al inicio o al final -->
+    <button id="goStartButton">Ir al Inicio</button>
+    <button id="goEndButton">Ir al Final</button>
+
+    <script src="jszip.min.js"></script> <!-- Incluye JSZip localmente -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script> <!-- Incluye PDF.js -->
+
+    <script>
+        let currentFontSize = 16;  // Tamaño de fuente inicial
+        let bookContent = [];  // Array para almacenar los contenidos de cada archivo HTML
+        let currentPageIndex = 0;  // Índice de la página actual
+        let images = [];  // Array para almacenar las imágenes extraídas
+        let pdfDoc = null; // Documento PDF cargado
+        let currentPDFPage = 1; // Página actual del PDF
+
+        // Función para leer el archivo y mostrar su contenido
+        document.getElementById("fileInput").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+
+            const reader = new FileReader();
+
+            // Si es un archivo HTML
+            if (fileExtension === "html") {
+                reader.onload = function(e) {
+                    const fileContent = e.target.result;
+                    const viewer = document.getElementById("viewer");
+                    viewer.innerHTML = fileContent;
+                    viewer.style.fontSize = currentFontSize + "px";  // Ajustar el tamaño de fuente
+                    bookContent = [fileContent];  // Almacenar el contenido en el array de páginas
+                    currentPageIndex = 0; // Empezamos desde la primera página
+                };
+                reader.readAsText(file);
+            }
+
+            // Si es un archivo HTMLZ (comprimido en ZIP)
+            else if (fileExtension === "htmlz") {
+                reader.onload = function(e) {
+                    const zipData = e.target.result;
+                    const zip = new JSZip();
+                    zip.loadAsync(zipData).then(function(zipContent) {
+                        const viewer = document.getElementById("viewer");
+                        const htmlFileName = "index.html";
+
+                        if (zipContent.files[htmlFileName]) {
+                            zipContent.files[htmlFileName].async("text").then(function(htmlContent) {
+                                viewer.innerHTML = htmlContent;
+                                viewer.style.fontSize = currentFontSize + "px";
+                                bookContent = [htmlContent];
+                                currentPageIndex = 0; // Empezamos desde la primera página
+                            });
+                        } else {
+                            alert("No se encontró un archivo index.html en el archivo HTMLZ.");
+                        }
+                    });
+                };
+                reader.readAsArrayBuffer(file); // Leer como ArrayBuffer para archivos ZIP
+            }
+
+            // Si es un archivo PDF
+            else if (fileExtension === "pdf") {
+                const fileUrl = URL.createObjectURL(file);
+                const viewer = document.getElementById("viewer");
+                viewer.innerHTML = "<canvas id='pdf-canvas'></canvas>"; // Limpiar el visor y colocar un lienzo
+                renderPDF(fileUrl);  // Renderizar el PDF
+            }
+        });
+
+        // Función para renderizar el PDF
+        function renderPDF(fileUrl) {
+            const viewer = document.getElementById("viewer");
+            const canvas = document.getElementById("pdf-canvas");
+            const ctx = canvas.getContext("2d");
+
+            pdfjsLib.getDocument(fileUrl).promise.then(function(pdf) {
+                pdfDoc = pdf;
+                currentPDFPage = 1; // Empezamos desde la primera página
+                renderPage(currentPDFPage);  // Renderizar la primera página
+            });
+
+            // Función para renderizar una página PDF
+            function renderPage(pageNum) {
+                pdfDoc.getPage(pageNum).then(function(page) {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport
+                    };
+
+                    page.render(renderContext);
+                });
+            }
+
+            // Navegar entre las páginas del PDF
+            document.getElementById("prevButton").addEventListener("click", function() {
+                if (pdfDoc && currentPDFPage > 1) {
+                    renderPage(--currentPDFPage);
+                }
+            });
+
+            document.getElementById("nextButton").addEventListener("click", function() {
+                if (pdfDoc && currentPDFPage < pdfDoc.numPages) {
+                    renderPage(++currentPDFPage);
+                }
+            });
+        }
+
+        // Acercar el contenido (HTML y PDF)
+        document.getElementById("zoomInButton").addEventListener("click", function() {
+            if (currentFontSize < 30) {  // Limitar el tamaño máximo de la fuente
+                currentFontSize += 2;
+                document.getElementById("viewer").style.fontSize = currentFontSize + "px";
+            }
+        });
+
+        // Alejar el contenido (HTML y PDF)
+        document.getElementById("zoomOutButton").addEventListener("click", function() {
+            if (currentFontSize > 10) {  // Limitar el tamaño mínimo de la fuente
+                currentFontSize -= 2;
+                document.getElementById("viewer").style.fontSize = currentFontSize + "px";
+            }
+        });
+
+        // Ir al inicio
+        document.getElementById("goStartButton").addEventListener("click", function() {
+            if (bookContent.length > 0) {
+                currentPageIndex = 0;
+                showPage(currentPageIndex);
+            } else if (pdfDoc) {
+                currentPDFPage = 1;
+                renderPage(currentPDFPage);
+            }
+        });
+
+        // Ir al final
+        document.getElementById("goEndButton").addEventListener("click", function() {
+            if (bookContent.length > 0) {
+                currentPageIndex = bookContent.length - 1;
+                showPage(currentPageIndex);
+            } else if (pdfDoc) {
+                currentPDFPage = pdfDoc.numPages;
+                renderPage(currentPDFPage);
+            }
+        });
+
+        // Navegar a la página anterior
+        document.getElementById("prevButton").addEventListener("click", function() {
+            if (bookContent.length > 0 && currentPageIndex > 0) {
+                showPage(--currentPageIndex);
+            }
+        });
+
+        // Navegar a la siguiente página
+        document.getElementById("nextButton").addEventListener("click", function() {
+            if (bookContent.length > 0 && currentPageIndex < bookContent.length - 1) {
+                showPage(++currentPageIndex);
+            }
+        });
+
+        // Mostrar una página específica
+        function showPage(index) {
+            if (index >= 0 && index < bookContent.length) {
+                const pageContent = bookContent[index];
+                const viewer = document.getElementById("viewer");
+                viewer.innerHTML = pageContent;
+            }
+        }
+    </script>
+
+</body>
+</html>

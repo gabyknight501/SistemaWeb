@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="Libro digital, Ingenieria de software, sistemas web, html, css, js, php, secundaria">
+    <title>SISTEMA WEB-ING SOFTWARE-GABY C</title>
+
+    <!-- Bootstrap CSS (CDN) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="UAM-logo.png" type="image/x-icon" />
+</head>
+<body>
+     <!-- Botón de WhatsApp -->
+    <a href="https://api.whatsapp.com/send?phone=525543816877" class="wsp" target="_blank"> 
+        <span class="waspover" title="WhatsApp"></span> 
+        <svg class="svg-inline--fa fa-whatsapp fa-w-14 wsp-icon" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="whatsapp" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+            <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"></path>
+        </svg>
+    </a>
+        
+    <a class="ir-arriba" href="#" title="Volver arriba"> 
+        <svg class="svg-inline--fa fa-arrow-up fa-w-14" aria-hidden="true" focusable="false" data-prefix="fa" data-icon="arrow-up" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">                
+            <path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"></path>
+        </svg>
+    </a>
+
+    <!-- Barra de selección de país, idioma y región -->
+    <div style="background-color: green; padding: 10px;">
+        <div class="sc-540448f4-0 fTemVb" style="display: flex; justify-content: space-between; align-items: center;">
+            <!-- Botón País -->
+            <div title="México" aria-expanded="false" class="sc-eeec92d6-2 hvUcCR" style="flex: 1; margin: 0 5px; padding: 10px; font-size: 14px; background-color: white; border: 2px solid #ccc; text-align: center; display: flex; justify-content: center; align-items: center; height: 50px; box-sizing: border-box;">
+                <svg viewBox="0 0 12 12" class="sc-d4146c7e-0 cjDBTB sc-eeec92d6-5 geUqCF" focusable="false" aria-hidden="true" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <use xlink:href="#mx"></use>
+                </svg>
+                <img src="https://flagcdn.com/mx.svg" alt="Bandera de México" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                <span class="VisuallyHidden-sc-8buqks-0 lmhoCy"> País: México</span>
+            </div>
+    
+            <!-- Botón Idioma -->
+            <div data-bdd="language-button" title="Español (es-mx)" aria-expanded="false" class="sc-eeec92d6-1 cNtRZm" style="flex: 1; margin: 0 5px; padding: 10px; font-size: 14px; background-color: white; border: 2px solid #ccc; text-align: center; display: flex; justify-content: center; align-items: center; height: 50px; box-sizing: border-box;">
+                <svg viewBox="0 0 12 12" width="1em" height="1em" aria-hidden="true" focusable="false" class="BaseSvg-sc-yh8lnd-0 SpeechBubbleIcon__StyledBaseSvg-sc-bekthj-0 ckLyyv" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <path d="M23 3H1v13.8h16.72L23 21.4zM2.5 15.3V4.5h19v13.6l-3.22-2.8zM17 8.75H7v-1.5h10zm0 3.5H7v-1.5h10z"></path>
+                </svg>
+                <span aria-hidden="true" class="sc-eeec92d6-4 gWVwAf">Idioma:  </span>
+                <span class="VisuallyHidden-sc-8buqks-0 lmhoCy"> Español (es)</span>
+            </div>
+    
+            <!-- Botón Región -->
+            <div data-testid="region-button" title="Todo México" aria-expanded="false" class="sc-eeec92d6-3 eLeLnM" style="flex: 1; margin: 0 5px; padding: 10px; font-size: 14px; background-color: white; border: 2px solid #ccc; text-align: center; display: flex; justify-content: center; align-items: center; height: 50px; box-sizing: border-box;">
+                <svg viewBox="0 0 12 12" width="1em" height="1em" aria-hidden="true" focusable="false" class="BaseSvg-sc-yh8lnd-0 CompassArrowIcon__StyledBaseSvg-sc-1do14k4-0 ckLyyv" style="width: 20px; height: 20px; margin-right: 5px;">
+                    <path d="m3.17 12.12 5.82 2.5.4.4 2.5 5.81 8.7-17.43zM1 11.49 21.97 1 23 2.03 12.51 23l-1.39-.04L8.1 15.9l-7.06-3.02z"></path>
+                </svg>
+                <span aria-hidden="true" class="sc-eeec92d6-4 gWVwAf">Región:  </span>
+                <span class="VisuallyHidden-sc-8buqks-0 lmhoCy"> CDMX, México</span>
+            </div>
+    
+            <!-- Botón Hora -->
+            <div id="time-button" title="Hora Actual en Ciudad de México" aria-expanded="false" class="sc-eeec92d6-4 gWVwAf" style="flex: 1; margin: 0 5px; padding: 10px; font-size: 14px; background-color: white; border: 2px solid #ccc; text-align: center; display: flex; justify-content: center; align-items: center; height: 50px; box-sizing: border-box;">
+                <span id="time-display">Hora: 00:00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- obtener la hora actual en el huso horario de la Ciudad de México -->
+    <script>
+        function updateTime() {
+            const options = { timeZone: 'America/Mexico_City', hour: '2-digit', minute: '2-digit' };
+            const date = new Date().toLocaleTimeString('es-MX', options);
+            document.getElementById('time-display').textContent = `Hora: ${date}`;
+        }
+    
+        // Actualiza la hora cada minuto
+        setInterval(updateTime, 60000);
+        updateTime(); // Llamada inicial
+    </script>
+                    
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand" href="/">
+                <img src="UAMI.jpeg" alt="Logo" width="170" height="84">
+            </a>
+            
+            <!-- Botón para colapsar el menú en dispositivos móviles -->
+            <button class="btn header-btn-collapse-nav ml-5" data-bs-toggle="collapse" data-bs-target=".navbar-nav" aria-expanded="false" aria-label="Toggle navigation"> 
+                <i class="fas fa-bars"></i> 
+            </button> 
+
+            <!-- Botón de hamburguesa para dispositivos móviles -->
+            <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> -->
+
+            <!-- Menú desplegable -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Inicio -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInicio" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Inicio
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownInicio">
+                            <!-- <li><a class="dropdown-item" href="file:///D:/Documentos%202/HTML/SISTEMA%20WEB-PROYECTO/VISUALIZACIONENFRENTE.html">Página principal</a></li> -->
+                            <li><a class="dropdown-item" href="VISUALIZACIONENFRENTE.html">Página principal</a></li>
+                            <li><a class="dropdown-item" href="VISUALIZACIONACERCADENOSOTROS.html">Acerca de nosotros</a></li>
+                            <!-- Agrega más enlaces aquí si es necesario -->
+                        </ul>
+                    </li>
+                    
+                    <!-- Traducción -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTraduccion" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Traducción
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownTraduccion">
+                            <!-- <li><a class="dropdown-item" href="file://D:/Documentos%202/HTML/VISUALIZACIONTRADUCTOR.html">TRADUCTOR ESP-ING</a></li> -->
+                            <li><a class="dropdown-item" href="file:///D:/Documentos%202/HTML/SISTEMA%20WEB-PROYECTO/VISUALIZACIONTRADUCTOR.html">Traductor Esp-Ing</a></li>
+                            <!-- Puedes añadir más enlaces de traducción si es necesario -->
+                        </ul>
+                    </li>
+
+                    <!-- Base de Datos -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownBD" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Base de Datos (BD)
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownBD">
+                            <!-- <li><a class="dropdown-item" target="new" href="https://docs.google.com/document/d/1A1_9o-Yg4jPgjQJkjcH0I1eyWgXkNjOd6a-JdodgI2A/edit?tab=t.0#heading=h.gjdgxs">Documento de Visión y Alcance</a></li>
+                            <li><a class="dropdown-item" target="new" href="https://docs.google.com/document/d/1QPM5kgIi8culb1IH7WTT5ucAW4Fh8kpLZoTLj27HZGM/edit?tab=t.0">Modelo del Dominio del Problema</a></li> -->
+                            <li><a class="dropdown-item" target="new" href="VISULIZACIONBASEDEDATOS.html">Documentos</a></li>
+                            <li><a class="dropdown-item" target="new" href="https://docs.google.com/document/d/1QPM5kgIi8culb1IH7WTT5ucAW4Fh8kpLZoTLj27HZGM/edit?tab=t.0">Videos</a></li>
+                            <!-- Puedes añadir más enlaces de base de datos si es necesario -->
+                        </ul>
+                    </li>
+
+                    <!-- Atención a Clientes -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownClientes" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Atención a Clientes
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownClientes">
+                            <li><a class="dropdown-item" href="VISUALIZACIONATENCIONACLIENTES.html">Avisos</a></li>
+                            <li><a class="dropdown-item" href="file:///D:/Documentos%202/HTML/chatbot.html">Chatbot</a></li>
+                            <!-- Puedes añadir más enlaces de atención a clientes si es necesario -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    
+    <!-- Bootstrap JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome (para el ícono de la hamburguesa) -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <div class="header-text">
+        <h1>¡ACERCA DE NOSOTROS!</h1>
+    </div>
+
+    <!-- Sección Acerca de Nosotros -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Columna para la imagen -->
+            <div class="col-md-6">
+                <img src="https://via.placeholder.com/600x400/0000FF/808080?Text=Ilustración" alt="Imagen ilustrativa" class="img-fluid rounded">
+            </div>
+
+            <!-- Columna para el texto -->
+            <div class="col-md-6">
+                <h2 class="mb-4">¿Quién soy yo?</h2>
+                <p class="lead text-justify">
+                    Soy una estudiante de la UAM-I. Estoy terminando mi licenciatura.
+                </p>
+                <p class="lead text-justify">
+                    Este proyecto, <strong>Sistema Web para Ingeniería de Software</strong>, es una herramienta educativa diseñada para estudiantes de nivel secundaria. Su objetivo principal es facilitar el aprendizaje de conceptos fundamentales de desarrollo web, como HTML, CSS, JavaScript y PHP, a través de un libro digital interactivo.
+                </p>
+                <p class="text-justify">
+                    El sistema web permite a los estudiantes:
+                </p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">⭐Aprender a crear páginas web desde cero.</li>
+                    <li class="list-group-item">⭐Explorar ejemplos prácticos de código.</li>
+                    <li class="list-group-item">⭐Interactuar con un traductor integrado para mejorar su comprensión.</li>
+                    <li class="list-group-item">⭐Acceder a una base de datos de recursos educativos.</li>
+                </ul>
+                <p class="mt-3 text-justify">
+                    Este proyecto fue desarrollado por <strong>Gaby C.</strong> Esto fue parte de su esfuerzo para facilitar el acceso a la educación tecnológica y fomentar el interés en la ingeniería de software desde una edad temprana, en este caso a los estudintes de nivel secundaria.
+                </p>
+                <h4 class="mt-4">Tecnologías Utilizadas</h4>
+                <div class="d-flex flex-wrap">
+                    <span class="badge bg-primary me-2 mb-2">HTML</span>
+                    <span class="badge bg-success me-2 mb-2">CSS</span>
+                    <span class="badge bg-warning me-2 mb-2">JavaScript</span>
+                    <span class="badge bg-danger me-2 mb-2">PHP</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+     <!-- Footer -->
+    <!-- Footer HTML -->
+    <footer class="site-footer">
+        <div class="container">
+        <div class="row">
+        <div class="col-sm-12 col-md-6">
+        <h6>ACERCA DEL SISTEMA WEB</h6>
+        <p class="text-justify">Es un sistema web del desarrollo de contenido didáctico para promover el desarrollo web de la Ingeniería de Software a 
+            nivel secundaria.  Se encuentra concentrada toda la información, esta estará en diferentes 
+            tipos de contenido (documentos, códigos, ejercicios, imágenes, videos, tutoriales, encuestas, entre otros), esto permitirá y facilitará la gestión 
+            eficiente del contenido educativo, también estará disponible las 24/7, podrá ser accesible a través de diversos dispositivos electrónicos 
+            (computadoras, celulares, tabletas, etc.).</p>
+        </div>
+        <div class="col-6 col-md-3">
+        <h6>MENÚ</h6>
+        <ul class="footer-links ">
+        <li><a href="VISUALIZACIONENFRENTE.html">Inicio</a></li>
+        <li><a href="VISUALIZACIONTRADUCTOR.html">Traducción</a></li>
+        <li><a href="VISULIZACIONBASEDEDATOS.html">Base de Datos (BD)</a></li>
+        <li><a href="VISUALIZACIONATENCIONACLIENTES.html">Atención a clientes</a></li>
+        <!-- <li><a href="#">Theme Creator</a></li>
+        <li><a href="#">Templates</a></li> -->
+        </ul>
+        </div>
+        <div class="col-6 col-md-3">
+        <h6>CONTACTO</h6>
+        <ul class="footer-links">
+            <li><a href="VISUALIZACIONACERCADENOSOTROS.html">Acerca de nosostros</a></li>
+            <li><a href="#">E-mail: gabby_rush@hotmail.com</a></li>
+            <li><a href="https://api.whatsapp.com/send?phone=525543816877">Tel: (55) 4381-6877</a></li>
+        <!-- <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Sitemap</a></li> -->
+        </ul>
+        </div>
+        </div>
+        <hr class="small">
+        </div>
+        <div class="container">
+        <div class="row">
+        <div class="col-md-8 col-sm-6 col-12">
+        <p class="copyright-text">Copyright © 2025 SISTEMA WEB-ING SOFTWARE | Todos los derechos reservados.
+        <a href="#"><span class="logo">Creado por Gaby C.</span></a>
+        </p>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12">
+        <ul class="social-icons">
+        <li><a class="facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+        <li><a class="youtube" href="https://www.youtube.com/@GabyC-y1j"><i class="fab fa-youtube"></i></a></li>
+        <li><a class="github" href="https://github.com/gabyknight501/SistemaWeb"><i class="fab fa-github"></i></a></li>
+        <li><a class="whatsapp" href="https://api.whatsapp.com/send?phone=525543816877"><i class="fab fa-whatsapp"></i></a></li>
+        </ul>
+        </div>
+        </div>
+        </div>
+    </footer>
+
+
+    <style>
+        /* Estilos para el botón de WhatsApp */
+        .wsp {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 90px;
+            right: 20px;
+            background-color: #28a745 !important;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 35px;
+            z-index: 9999;
+            display: flex; /* Habilita flexbox */
+            align-items: center; /* Centra verticalmente */
+            justify-content: center; /* Centra horizontalmente */
+        }
+        
+        .wsp .wsp-icon {
+            width: 24px; /* Ajusta el tamaño del icono de WhatsApp */
+            height: 24px; /* Ajusta el tamaño del icono de WhatsApp */
+            fill: white; /* Color del icono */
+        }
+        
+        /* Estilos para el botón "Volver arriba" */
+        .ir-arriba {
+            display: none;
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            bottom: 30px;
+            right: 25px;
+            z-index: 20;
+            background-color: #29aafe !important;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex; /* Habilita flexbox */
+            align-items: center; /* Centra verticalmente */
+            justify-content: center; /* Centra horizontalmente */
+        }
+        
+        .ir-arriba svg {
+            width: 24px; /* Ajusta el tamaño del icono */
+            height: 24px; /* Ajusta el tamaño del icono */
+            fill: white; /* Color del icono */
+        }
+        
+        /* Asegúrate de que los botones sean responsivos */
+        @media (max-width: 768px) {
+            .wsp {
+                width: 40px; /* Tamaño más pequeño para móviles */
+                height: 40px; /* Tamaño más pequeño para móviles */
+                bottom: 10px; /* Ajusta la posición vertical */
+                right: 10px; /* Ajusta la posición horizontal */
+            }
+        
+            .wsp .wsp-icon {
+                width: 20px; /* Tamaño más pequeño para móviles */
+                height: 20px; /* Tamaño más pequeño para móviles */
+            }
+        
+            .ir-arriba {
+                width: 40px; /* Tamaño más pequeño para móviles */
+                height: 40px; /* Tamaño más pequeño para móviles */
+                bottom: 10px; /* Ajusta la posición vertical 60px*/
+                right: 10px; /* Ajusta la posición horizontal */
+            }
+        
+            .ir-arriba svg {
+                width: 20px; /* Tamaño más pequeño para móviles */
+                height: 20px; /* Tamaño más pequeño para móviles */
+            }
+        }
+
+        /* h1 {
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+          color: white; /*ESTO ES EL COLOR DEL TEXTO*/
+          /*background-color: #00eeff;/*ESTO ES EL FONDO DEL TEXTO*/
+        /*}
+        .header-body {
+          background-color: #0e01be;
+          padding: 10px 0;
+        }
+        .header-nav-bar {
+          background-color: #007bff;
+        }
+        .header-nav-bar a {
+          color: white;
+          text-decoration: none;
+          padding: 10px 15px;
+        }
+        .header-nav-bar a:hover {
+          background-color: #0056b3;
+        } */
+
+        .text-justify {
+        text-align: justify;
+        }
+
+/*FOOTER*/
+body{
+font-family: 'Poppins', sans-serif;
+min-height: 100vh;
+display: block;
+align-items: center;
+justify-content: center;
+}
+.site-footer {
+background-color: #26272b;
+padding: 45px 0 20px;
+font-size: 15px;
+line-height: 24px;
+color: #737373;
+box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+.site-footer hr {
+border-top-color: #bbb;
+opacity: 0.5;
+}
+.site-footer hr.small {
+margin: 20px 0;
+}
+.site-footer h6 {
+color: #fff;
+font-size: 16px;
+text-transform: uppercase;
+margin-top: 5px;
+letter-spacing: 2px;
+}
+.site-footer a {
+color: #737373;
+}
+.site-footer a:hover {
+color: #fff;
+text-decoration: none;
+}
+.footer-links {
+padding-left: 0;
+list-style: none;
+}
+.footer-links li {
+display: block;
+}
+.footer-links a {
+color: #737373;
+}
+.footer-links a:active,
+.footer-links a:focus,
+.footer-links a:hover {
+color: #fff;
+text-decoration: none;
+}
+.site-footer .social-icons {
+text-align: right;
+}
+.site-footer .social-icons a {
+width: 40px;
+height: 40px;
+line-height: 40px;
+margin-left: 6px;
+margin-right: 0;
+border-radius: 100%;
+background-color: #33353d;
+}
+.copyright-text {
+margin: 0;
+}
+@media (max-width: 991px) {
+.site-footer [class^="col-"] {
+margin-bottom: 30px;
+}
+}
+@media (max-width: 767px) {
+.site-footer {
+padding-bottom: 0;
+}
+.site-footer .copyright-text,
+.site-footer .social-icons {
+text-align: center;
+}
+}
+.social-icons {
+padding-left: 0;
+margin-bottom: 0;
+list-style: none;
+}
+.social-icons li {
+display: inline-block;
+margin-bottom: 4px;
+}
+.social-icons a {
+background-color: #eceeef;
+color: #818a91;
+font-size: 16px;
+display: inline-block;
+line-height: 44px;
+width: 44px;
+height: 44px;
+text-align: center;
+margin-right: 8px;
+border-radius: 100%;
+-webkit-transition: all 0.2s linear;
+-o-transition: all 0.2s linear;
+transition: all 0.2s linear;
+}
+.logo{
+color:#eb6857;
+}
+.social-icons a:active,
+.social-icons a:focus,
+.social-icons a:hover {
+color: #fff;
+background-color: #29aafe;
+}
+.social-icons a.facebook:hover {
+background-color: #3b5998;
+}
+.social-icons a.twitter:hover {
+background-color: #00aced;
+}
+.social-icons a.linkedin:hover {
+background-color: #007bb6;
+}
+.social-icons a.dribbble:hover {
+background-color: #ea4c89;
+}
+
+</style>
+
+    <!-- Bootstrap JS (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
