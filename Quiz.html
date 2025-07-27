@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Trivia de Python</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    #juego, #resultado, #ayuda {
+      display: none;
+    }
+    button {
+      font-size: 1.2em;
+      margin: 5px;
+      padding: 10px 20px;
+    }
+    #timer {
+      font-size: 2em;
+      color: red;
+    }
+    .pregunta {
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Trivia de Python 🐍</h1>
+
+  <div id="inicio">
+    <input type="text" id="nombre" placeholder="Ingresa tu nombre"><br><br>
+    <label>Dificultad:</label>
+    <select id="dificultad">
+      <option value="facil">Fácil</option>
+      <option value="medio">Medio</option>
+      <option value="dificil">Difícil</option>
+    </select><br><br>
+    <button onclick="iniciarJuego()">Iniciar Juego</button>
+  </div>
+
+  <div id="juego">
+    <div id="timer">⏳ 10</div>
+    <div class="pregunta" id="preguntaTexto"></div>
+    <div id="opciones"></div>
+    <button onclick="mostrarAyuda()">¿Ayuda?</button>
+    <button onclick="siguientePregunta()">Siguiente</button>
+    <p>Vidas: ❤️<span id="vidas">3</span></p>
+  </div>
+
+  <div id="ayuda"></div>
+
+  <div id="resultado">
+    <h2>¡Juego Terminado!</h2>
+    <p id="puntajeFinal"></p>
+    <button onclick="location.reload()">Reiniciar</button>
+  </div>
+
+  <script>
+    const POST_URL = "https://script.google.com/macros/s/AKfycbz0o_BsnnAjXQo3uHMoaCPFv7jwK8Dbl45VTxTAArQ29ydWSHFNXABfORUpi98Vfsb9/exec"; // ← Reemplaza con tu URL de Google Apps Script
+    const tiempoLimite = 10;
+    let tiempoRestante, intervalo;
+    let preguntas, preguntaActual = 0;
+    let puntaje = 0;
+    let vidas = 3;
+    let dificultad = "";
+
+    const preguntasPorNivel = {
+      facil: [
+        { pregunta: "¿Qué tipo de dato es 'Hola Mundo'?", opciones: ["Cadena", "Entero", "Booleano"], respuesta: "Cadena", ayuda: "Está entre comillas, por lo tanto es una cadena." },
+        { pregunta: "¿Cómo se representa una lista en Python?", opciones: ["{}", "()", "[]"], respuesta: "[]", ayuda: "Las listas usan corchetes: []" },
+        { pregunta: "¿Qué hace la función `print()`?", opciones: ["Suma", "Imprime", "Lee archivo"], respuesta: "Imprime", ayuda: "Se usa para mostrar texto o valores en pantalla." }
+      ],
+      medio: [
+        { pregunta: "¿Qué operador se usa para la división entera?", opciones: ["/", "//", "%"], respuesta: "//", ayuda: "`//` divide y devuelve la parte entera." },
+        { pregunta: "¿Cuál es el resultado de `2 ** 3`?", opciones: ["6", "8", "9"], respuesta: "8", ayuda: "Es una potencia: 2 elevado a 3." },
+        { pregunta: "¿Cómo defines una función en Python?", opciones: ["function miFuncion():", "def miFuncion():", "func miFuncion():"], respuesta: "def miFuncion():", ayuda: "Se usa `def` para definir funciones." }
+      ],
+      dificil: [
+        { pregunta: "¿Qué es un diccionario en Python?", opciones: ["Una lista ordenada", "Un conjunto de pares clave-valor", "Una función incorporada"], respuesta: "Un conjunto de pares clave-valor", ayuda: "Usa `{}` y almacena datos como clave:valor." },
+        { pregunta: "¿Qué devuelve `list(filter(lambda x: x%2==0, [1,2,3,4]))`?", opciones: ["[1,3]", "[2,4]", "[1,2,3,4]"], respuesta: "[2,4]", ayuda: "Filtra solo los números pares." },
+        { pregunta: "¿Qué significa PEP8?", opciones: ["Un error", "Una biblioteca", "Guía de estilo de Python"], respuesta: "Guía de estilo de Python", ayuda: "Define cómo escribir código legible y limpio." }
+      ]
+    };
+
+    function iniciarJuego() {
+      const nombre = document.getElementById("nombre").value.trim();
+      if (nombre === "") return alert("Ingresa tu nombre");
+      dificultad = document.getElementById("dificultad").value;
+      preguntas = [...preguntasPorNivel[dificultad]];
+      preguntas = preguntas.sort(() => Math.random() - 0.5);
+      document.getElementById("inicio").style.display = "none";
+      document.getElementById("juego").style.display = "block";
+      mostrarPregunta();
+    }
+
+    function mostrarPregunta() {
+      if (preguntaActual >= preguntas.length || vidas <= 0) {
+        terminarJuego();
+        return;
+      }
+
+      document.getElementById("ayuda").style.display = "none";
+      tiempoRestante = tiempoLimite;
+      document.getElementById("timer").textContent = `⏳ ${tiempoRestante}`;
+      intervalo = setInterval(() => {
+        tiempoRestante--;
+        document.getElementById("timer").textContent = `⏳ ${tiempoRestante}`;
+        if (tiempoRestante <= 0) {
+          clearInterval(intervalo);
+          perderVida();
+        }
+      }, 1000);
+
+      const actual = preguntas[preguntaActual];
+      document.getElementById("preguntaTexto").textContent = actual.pregunta;
+      document.getElementById("opciones").innerHTML = "";
+
+      actual.opciones.forEach(op => {
+        const btn = document.createElement("button");
+        btn.textContent = op;
+        btn.onclick = () => verificarRespuesta(op);
+        document.getElementById("opciones").appendChild(btn);
+      });
+    }
+
+    function verificarRespuesta(opcionSeleccionada) {
+      clearInterval(intervalo);
+      const correcta = preguntas[preguntaActual].respuesta;
+      if (opcionSeleccionada === correcta) {
+        puntaje += 1;
+      } else {
+        perderVida();
+        return;
+      }
+      siguientePregunta();
+    }
+
+    function perderVida() {
+      vidas--;
+      document.getElementById("vidas").textContent = vidas;
+      siguientePregunta();
+    }
+
+    function siguientePregunta() {
+      clearInterval(intervalo);
+      preguntaActual++;
+      mostrarPregunta();
+    }
+
+    function mostrarAyuda() {
+      const explicacion = preguntas[preguntaActual].ayuda;
+      const ayudaDiv = document.getElementById("ayuda");
+      ayudaDiv.textContent = "ℹ️ " + explicacion;
+      ayudaDiv.style.display = "block";
+    }
+
+    function terminarJuego() {
+      document.getElementById("juego").style.display = "none";
+      document.getElementById("resultado").style.display = "block";
+      document.getElementById("puntajeFinal").textContent = `Tu puntaje fue: ${puntaje}`;
+
+      const nombre = document.getElementById("nombre").value;
+      const fecha = new Date().toLocaleString();
+
+      fetch(POST_URL, {
+        method: "POST",
+        body: JSON.stringify({
+          nombre: nombre,
+          puntaje: puntaje,
+          dificultad: dificultad,
+          fecha: fecha
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(res => console.log("Enviado"))
+        .catch(err => console.error("Error al enviar:", err));
+    }
+  </script>
+
+</body>
+</html>
